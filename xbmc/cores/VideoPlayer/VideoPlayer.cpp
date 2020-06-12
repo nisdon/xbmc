@@ -5196,7 +5196,7 @@ void CVideoPlayer::SetAudioDmonoMode(EDMONOMODE mode)
   {
     CSingleLock lock(m_content.m_section);
 
-    SelectionStream& s = m_SelectionStreams.Get(STREAM_AUDIO, index);
+    SelectionStream& s = m_content.m_selectionStreams.Get(STREAM_AUDIO, index);
     s.dmono_mode = mode;
   }
   m_CurrentAudio.hint.dmono_mode = mode;

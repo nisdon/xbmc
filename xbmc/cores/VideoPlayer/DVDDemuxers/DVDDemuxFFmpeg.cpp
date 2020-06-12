@@ -1090,6 +1090,14 @@ DemuxPacket* CDVDDemuxFFmpeg::Read()
             ((CDemuxStreamAudio*)stream)->sublang = std::string(e2->value, 3);
           else
             ((CDemuxStreamAudio*)stream)->sublang = "";
+          if (is_dmono)
+            ((CDemuxStreamAudio*)stream)->m_channelLayoutName = "dual-mono";
+          else{
+            char buf[32] = { 0 };
+            av_get_channel_layout_string(buf, 31, ((CDemuxStreamAudio*)stream)->iChannels, ((CDemuxStreamAudio*)stream)->iChannelLayout);
+            ((CDemuxStreamAudio*)stream)->m_channelLayoutName = buf;
+          }
+          ((CDemuxStreamAudio*)stream)->changes++;
         }
       }
     }

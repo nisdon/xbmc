@@ -31,6 +31,7 @@
 #include "filesystem/PluginDirectory.h"
 #include "messaging/helpers/DialogOKHelper.h"
 #include "ServiceBroker.h"
+#include "pvr/PVRManager.h"
 
 using namespace PLAYLIST;
 using namespace KODI::MESSAGING;
@@ -301,6 +302,8 @@ bool CPlayListPlayer::Play(int iSong, std::string player, bool bAutoPlay /* = fa
   CFileItemPtr item = playlist[m_iCurrentSong];
   if (item->IsVideoDb() && !item->HasVideoInfoTag())
     *(item->GetVideoInfoTag()) = XFILE::CVideoDatabaseFile::GetVideoTag(CURL(item->GetPath()));
+  else if (item->IsPVRRecording())
+    CServiceBroker::GetPVRManager().FillStreamFileItem(*item);
 
   playlist.SetPlayed(true);
 

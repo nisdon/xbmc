@@ -44,6 +44,7 @@ public:
   bool IsInited() const override { return m_messageQueue.IsInited(); }
   void SendMessage(CDVDMsg* pMsg, int priority = 0) override { m_messageQueue.Put(pMsg, priority); }
   void FlushMessages() override { m_messageQueue.Flush(); }
+  void SetDmonoMode(int mode) override;
 
   void SetDynamicRangeCompression(long drc) override { m_audioSink.SetDynamicRangeCompression(drc); }
   float GetDynamicRangeAmplification() const override { return 0.0f; }

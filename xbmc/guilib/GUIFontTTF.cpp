@@ -232,6 +232,7 @@ void CGUIFontTTF::ClearCharacterCache()
   m_posX = m_textureWidth;
   m_posY = -static_cast<int>(GetTextureLineHeight());
   m_textureHeight = 0;
+  m_maxFontHeight = 0;
 }
 
 void CGUIFontTTF::Clear()

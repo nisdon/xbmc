@@ -538,6 +538,11 @@ void CGUITextLayout::SetMaxHeight(float fHeight)
   m_maxHeight = fHeight;
 }
 
+inline bool _CanWrapAtLetter(character_t letter)
+{
+  character_t ch = letter & 0xffff;
+  return ch == L' ' ||  ch == L'。';
+};
 void CGUITextLayout::WrapText(const vecText &text, float maxWidth)
 {
   if (!m_font)
@@ -590,7 +595,7 @@ void CGUITextLayout::WrapText(const vecText &text, float maxWidth)
       // Get the current letter in the string
       const character_t& letter = *pos;
 
-      if (CanWrapAtLetter(letter)) // Check for a space char
+      if (_CanWrapAtLetter(letter)) // Check for a space char
         lastSpacePos = pos;
 
       curLine.emplace_back(letter);
@@ -611,7 +616,7 @@ void CGUITextLayout::WrapText(const vecText &text, float maxWidth)
         }
         else
         {
-          CGUIString linePart{lastBeginPos, lastSpacePos, false};
+          CGUIString linePart{lastBeginPos, IsSpace(*lastSpacePos)? lastSpacePos : lastSpacePos + 1, false};
           m_lines.emplace_back(linePart);
 
           pos = lastSpacePos + 1;
